@@ -9,9 +9,11 @@ import { Router } from '@angular/router';
 export class TopbarComponent implements OnInit {
   constructor(private router: Router) {}
   username: string = 'asdasdas';
+  roles: string[] = [];
   ngOnInit(): void {
-    console.log('NGONINIT !!!');
     this.username = sessionStorage.getItem('username')!;
+    this.roles = sessionStorage.getItem('roles')?.split(',')!;
+    console.log(this.roles);
   }
 
   logout() {

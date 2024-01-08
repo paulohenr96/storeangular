@@ -23,9 +23,9 @@ export class NewProductComponent implements OnInit {
     if (param != null && param != undefined) {
       this.idProduct = Number.parseInt(param);
       this.getProduct();
-    } else {
-      this.newProduct = new Product();
+      return;
     }
+    this.newProduct = new Product();
   }
   cleanForm() {
     this.newProduct = new Product();

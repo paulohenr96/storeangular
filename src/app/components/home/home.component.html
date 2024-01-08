@@ -2,108 +2,37 @@
 <div class="row">
   <!-- Earnings (Monthly) Card Example -->
   <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-primary shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-            >
-              Earnings This Month ({{ month }})
-            </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">
-              R$ {{ total }}
-            </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-card
+      [title]="'Earnings This Month  (' + month + ')'"
+      icon="fas fa-calendar fa-2x text-gray-300"
+      [value]="'R$' + total"
+      cor="primary"
+    ></app-card>
   </div>
 
   <!-- Earnings (Monthly) Card Example -->
   <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-success text-uppercase mb-1"
-            >
-              Diferent Products
-            </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">
-              {{ count }}
-            </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-card
+      title="Diferent Products"
+      icon="fas fa-dollar-sign fa-2x text-gray-300"
+      [value]="count + ' units'"
+      cor="success"
+    ></app-card>
   </div>
 
   <!-- Earnings (Monthly) Card Example -->
   <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-info shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-              Percentual of the Goal
-            </div>
-            <div class="row no-gutters align-items-center">
-              <div class="col-auto">
-                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                  {{ percentual }} %
-                </div>
-              </div>
-              <div class="col">
-                <div class="progress progress-sm mr-2">
-                  <div
-                    class="progress-bar bg-info"
-                    role="progressbar"
-                    [style.width.%]="percentual"
-                    [attr.aria-valuenow]="percentual"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-percentual-bar [percentual]="percentual"></app-percentual-bar>
   </div>
 
   <!-- Pending Requests Card Example -->
   <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-warning shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div
-              class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-            >
-              Total in Stock
-            </div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">
-              {{ totalQuantity }}
-            </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-comments fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-card
+      title="Total in Stock"
+      icon="fas fa-comments fa-2x text-gray-300"
+      [value]="totalQuantity + ' units'"
+      cor="success"
+    ></app-card>
   </div>
 </div>
 
@@ -117,7 +46,12 @@
       <div
         class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
       >
-        <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Yearly Sales</h6>
+        <select (change)="search()" [(ngModel)]="year" class="select_year_char">
+          <option [value]="2024">2024</option>
+          <option [value]="2023">2023</option>
+          <option [value]="2022">2022</option>
+        </select>
         <div class="dropdown no-arrow"></div>
       </div>
       <!-- Card Body -->

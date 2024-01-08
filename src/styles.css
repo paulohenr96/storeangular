@@ -3,5 +3,16 @@
 @import "template/sb-admin-2.css";
 @import "template/fontawesome-free/css/all.min.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.container_price {
+  display: flex;
+  justify-content: center;
+  color: green;
+}

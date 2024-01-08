@@ -20,11 +20,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.service.login(this.user).subscribe(
       (data: any) => {
-        console.log(data);
-
+        if (data.fullToken === '') return;
         sessionStorage.setItem('token', data.fullToken);
         sessionStorage.setItem('username', this.user.username);
-
+        sessionStorage.setItem('roles', data.roles);
         this.router.navigate(['/home']);
       },
       (error: any) => {

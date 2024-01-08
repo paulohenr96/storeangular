@@ -1,5 +1,8 @@
-<h3>$ {{ totalPrice }}</h3>
 <form>
+  <div class="container_price">
+    <h1>$ {{ totalPrice }}</h1>
+  </div>
+
   <div class="mb-3 col-3">
     <label for="buyer" class="form-label">Buyer</label>
     <input
@@ -156,7 +159,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table>
+        <table class="table table-bordered">
           <thead>
             <th>Product</th>
             <th>Quantity</th>
@@ -164,7 +167,7 @@
 
           <tbody>
             <tr *ngFor="let p of newSale.products">
-              <td>{{ p.productId }}</td>
+              <td>{{ p.productName }}</td>
               <td>{{ p.quantity }}</td>
             </tr>
           </tbody>
@@ -214,7 +217,16 @@
             aria-describedby="quantityHelp"
           />
         </div>
-
+        <div class="mb-3 col-3">
+          <label class="form-label">NAME</label>
+          <input
+            type="text"
+            readonly="true"
+            class="form-control"
+            [(ngModel)]="productSale.productName"
+            aria-describedby="quantityHelp"
+          />
+        </div>
         <div class="mb-3 col-3">
           <label for="quantity" class="form-label">Quantity</label>
           <input

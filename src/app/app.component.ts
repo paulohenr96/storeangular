@@ -18,4 +18,7 @@ export class AppComponent {
   isConnected(): Boolean {
     return sessionStorage.getItem('token') != undefined;
   }
+  isAdmin(): Boolean {
+    return sessionStorage.getItem('roles')?.includes('admin') ? true : false;
+  }
 }

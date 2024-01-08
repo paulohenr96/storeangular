@@ -29,6 +29,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CurveFactory } from 'd3-shape';
 import { ScaleLinear } from 'd3-scale';
 import { BaseType } from 'd3-selection';
+import { PercentualBarComponent } from './percentual-bar/percentual-bar.component';
+import { CardComponent } from './card/card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +44,8 @@ import { BaseType } from 'd3-selection';
     TopbarComponent,
     FooterComponent,
     BarChartComponent,
+    PercentualBarComponent,
+    CardComponent,
   ],
   imports: [
     NgxChartsModule,

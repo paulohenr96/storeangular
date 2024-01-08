@@ -13,18 +13,25 @@ export class SalesComponent implements OnInit {
   page: any;
   numbers: number[] = [];
   productSales: ProductSale[] = [];
+  isAdmin: Boolean = false;
   constructor(private service: SalesService) {}
   ngOnInit(): void {
     this.getSales(0);
+
+    this.isAdmin = localStorage.getItem('roles')?.includes('admin')
+      ? true
+      : false;
   }
   cancelSale(id: Number) {
     this.service.deleteSale(id).subscribe(() => this.getSales(0));
   }
 
   getSales(pageNumber: Number) {
+    console.log(pageNumber);
     this.numbers = [];
     this.service.getSales(pageNumber).subscribe((data: Page) => {
-      console.log(data);
+      console.log('data number => ' + data.number);
+
       this.page = data;
       for (var i = 0; i < this.page.totalPages; i++) {
         this.numbers.push(i);

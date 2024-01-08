@@ -1,0 +1,9 @@
+.select_year_char {
+  font-size: 1.5rem;
+  padding: 5px;
+  cursor: pointer;
+  border: 2px solid lightblue;
+}
+option {
+  cursor: pointer;
+}

@@ -12,9 +12,14 @@ import { Router } from '@angular/router';
 export class ProductComponent implements OnInit {
   products: any;
   numbers: number[] = [];
+  isAdmin: boolean = false;
   constructor(private router: Router, private service: ProductServiceService) {}
   ngOnInit(): void {
     this.getProducts(0);
+
+    this.isAdmin = localStorage.getItem('roles')?.includes('admin')
+      ? true
+      : false;
   }
 
   getProducts(page: number) {

@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+
 @Component({
   selector: 'app-salesform',
   templateUrl: './salesform.component.html',
@@ -29,7 +30,7 @@ export class SalesformComponent implements OnInit {
   productSale: ProductSale = new ProductSale();
   error: Boolean = false;
   msg: String[] = [];
-  products: any;
+  products: Page = new Page();
   totalPrice: number = 0;
   numbers: number[] = [];
   selectedProduct: Product = new Product();
@@ -55,6 +56,7 @@ export class SalesformComponent implements OnInit {
   }
   selectProduct(p: Product) {
     this.productSale.productId = p.id;
+    this.productSale.productName = p.name;
     this.selectedProduct = p;
   }
 
@@ -96,7 +98,6 @@ export class SalesformComponent implements OnInit {
     ) {
       return;
     }
-    this.products = [];
     this.productService.getProducts(page).subscribe((data: any) => {
       this.products = data;
       this.numbers = [];

@@ -83,8 +83,8 @@
           <th scope="col">NAME</th>
           <th scope="col">PRICE</th>
           <th scope="col">QUANTITY</th>
-          <th scope="col">REMOVE</th>
-          <th scope="col">EDIT</th>
+          <th scope="col" *ngIf="isAdmin">REMOVE</th>
+          <th scope="col" *ngIf="isAdmin">EDIT</th>
         </tr>
       </thead>
 
@@ -94,12 +94,12 @@
           <td>{{ p.name }}</td>
           <td>{{ p.price }}</td>
           <td>{{ p.quantity }}</td>
-          <td>
+          <td *ngIf="isAdmin">
             <button class="btn btn-primary" (click)="deleteProduct(p.id)">
               <i class="bi bi-trash"></i>
             </button>
           </td>
-          <td>
+          <td *ngIf="isAdmin">
             <button class="btn btn-primary" (click)="editProduct(p.id)">
               <i class="bi bi-pencil"></i>
             </button>

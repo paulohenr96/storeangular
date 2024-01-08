@@ -1,3 +1,8 @@
+import {
+  FormStyle,
+  TranslationWidth,
+  getLocaleMonthNames,
+} from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { SalesService } from 'src/app/service/sales.service';
 
@@ -10,61 +15,22 @@ export class BarChartComponent implements OnInit {
   @Input() xAxisLabel: string = 'Month';
   @Input() yAxisLabel: string = 'Sales';
   @Input() data: any[] = [];
-  single = [
-    {
-      name: 'Janeiro',
-      value: this.data[0], // Valor no eixo Y
-    },
-    {
-      name: 'Fevereiro',
-      value: this.data[1],
-    },
-    {
-      name: 'Março',
-      value: this.data[2],
-    },
-    {
-      name: 'Abril',
-      value: this.data[3],
-    },
-    {
-      name: 'Maio',
-      value: this.data[4],
-    },
-    {
-      name: 'Junho',
-      value: this.data[5],
-    },
-    {
-      name: 'Julho',
-      value: this.data[6],
-    },
-    {
-      name: 'Agosto',
-      value: this.data[7],
-    },
-    {
-      name: 'Setembro',
-      value: this.data[8],
-    },
-    {
-      name: 'Outubro',
-      value: this.data[9],
-    },
-    {
-      name: 'Novembro',
-      value: this.data[10],
-    },
-    {
-      name: 'Dezembro',
-      value: this.data[11],
-    },
-    // Adicione mais dados conforme necessário
-  ];
+  single: any[] = [];
 
   constructor(private service: SalesService) {}
 
   ngOnInit(): void {
+    this.single = getLocaleMonthNames(
+      'en-us',
+      FormStyle.Standalone,
+      TranslationWidth.Wide
+    ).map((e, i) => {
+      return {
+        name: e,
+        value: this.data[i],
+      };
+    });
+
     console.log(this.data);
   }
 }

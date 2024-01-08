@@ -131,7 +131,7 @@
           <th scope="col">PRODUCTS</th>
           <th scope="col">Total</th>
 
-          <th scope="col">REMOVE</th>
+          <th scope="col" *ngIf="isAdmin">REMOVE</th>
         </tr>
       </thead>
 
@@ -152,10 +152,10 @@
             </button>
           </td>
           <td>
-            <p>{{ p.totalPrice }}</p>
+            <p>$ {{ p.totalPrice }}</p>
           </td>
 
-          <td>
+          <td *ngIf="isAdmin">
             <button class="btn btn-primary" (click)="cancelSale(p.id)">
               <i class="bi bi-trash"></i>
             </button>

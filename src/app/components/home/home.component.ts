@@ -1,8 +1,16 @@
+import {
+  FormStyle,
+  TranslationWidth,
+  getLocaleMonthNames,
+} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Sale } from 'src/app/model/sale';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 import { SalesService } from 'src/app/service/sales.service';
-
+type dataType = {
+  xAxis: number[];
+  yAxis: number[];
+};
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,28 +24,24 @@ export class HomeComponent implements OnInit {
   goalIncome: number = 0;
   chartData: any[] = [];
   month: string = '';
-  months: string[] = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ];
+  months: string[] = [];
+  year: number = 2024;
   constructor(
     private service: SalesService,
     private productService: ProductServiceService
   ) {}
   ngOnInit(): void {
+    this.months = getLocaleMonthNames(
+      'en-us',
+      FormStyle.Standalone,
+      TranslationWidth.Wide
+    ).map((e) => e);
+
     this.findMonth();
     this.getInfo();
-    this.getChart();
+    this.getChart(this.year);
+
+    console.log(this.months);
   }
   findMonth() {
     this.month = this.months[new Date().getMonth()];
@@ -64,66 +68,19 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  getChart() {
-    this.service.getChart().subscribe((data: any) => {
-      console.log(data);
-      var array = [
-        {
-          name: 'Janeiro',
-          value: 0, // Valor no eixo Y
-        },
-        {
-          name: 'Fevereiro',
-          value: 0,
-        },
-        {
-          name: 'Março',
-          value: 0,
-        },
-        {
-          name: 'Abril',
-          value: 0,
-        },
-        {
-          name: 'Maio',
-          value: 0,
-        },
-        {
-          name: 'Junho',
-          value: 0,
-        },
-        {
-          name: 'Julho',
-          value: 0,
-        },
-        {
-          name: 'Agosto',
-          value: 0,
-        },
-        {
-          name: 'Setembro',
-          value: 0,
-        },
-        {
-          name: 'Outubro',
-          value: 0,
-        },
-        {
-          name: 'Novembro',
-          value: 0,
-        },
-        {
-          name: 'Dezembro',
-          value: 0,
-        },
-        // Adicione mais dados conforme necessário
-      ];
-      const vetorZeros = [...Array(12)].map(() => 0);
-
-      for (let i = 0; i < data.xAxis.length; i++) {
-        array[data.xAxis[i] - 1].value = data.yAxis[i];
-      }
-      this.chartData = array;
+  getChart(year: number) {
+    this.service.getChart(year).subscribe((data: dataType) => {
+      this.chartData = this.months.map((e, index) => {
+        const indexOfMonth = data.xAxis.indexOf(index);
+        return {
+          name: e,
+          value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,
+        };
+      });
     });
+  }
+
+  search() {
+    this.getChart(this.year);
   }
 }

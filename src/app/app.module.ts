@@ -31,6 +31,8 @@ import { ScaleLinear } from 'd3-scale';
 import { BaseType } from 'd3-selection';
 import { PercentualBarComponent } from './percentual-bar/percentual-bar.component';
 import { CardComponent } from './card/card.component';
+import { UsersComponent } from './page/users/users.component';
+import { UserformComponent } from './page/userform/userform.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { CardComponent } from './card/card.component';
     BarChartComponent,
     PercentualBarComponent,
     CardComponent,
+    UsersComponent,
+    UserformComponent,
   ],
   imports: [
     NgxChartsModule,

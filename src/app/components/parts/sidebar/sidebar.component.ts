@@ -7,9 +7,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
   ngOnInit(): void {
-    this.role = localStorage.getItem('roles')?.includes('admin')
-      ? 'ADMIN'
-      : 'USER';
+    this.role = sessionStorage.getItem('admin') === 'true' ? 'ADMIN' : 'USER';
   }
 
   role: string = '';

@@ -1,0 +1,52 @@
+<form>
+  <div class="mb-3 col-3">
+    <label for="name" class="form-label">NAME</label>
+    <input
+      name="name"
+      type="text"
+      [(ngModel)]="user.name"
+      class="form-control"
+      id="name"
+      aria-describedby="nameHelp"
+    />
+    <label for="username" class="form-label">USERNAME</label>
+    <input
+      name="username"
+      type="text"
+      [(ngModel)]="user.userName"
+      class="form-control"
+      id="username"
+      aria-describedby="usernameHelp"
+    />
+    <label for="password" class="form-label">PASSWORD</label>
+    <input
+      name="password"
+      type="text"
+      [(ngModel)]="user.password"
+      class="form-control"
+      id="password"
+      aria-describedby="passwordHelp"
+    />
+    <label for="role" class="form-label">ROLE</label>
+    <select [(ngModel)]="user.rolesName[0]" name="role">
+      <option [value]="'user'">USER</option>
+      <option [value]="'admin'">ADMIN</option>
+    </select>
+  </div>
+
+  <button type="button" class="btn btn-primary m-2" (click)="reset()">
+    Reset
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary m-2"
+    *ngIf="user.id === 0"
+    (click)="submit()"
+  >
+    Submit
+  </button>
+  <button type="button" class="btn btn-primary m-2" (click)="edit()">
+    Edit
+  </button>
+</form>

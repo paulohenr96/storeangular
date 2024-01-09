@@ -1,4 +1,7 @@
 export class User {
-  username: string = '';
+  id: number = 0;
+  name: string = '';
+  rolesName: string[] = [];
+  userName: string = '';
   password: string = '';
 }

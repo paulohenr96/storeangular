@@ -18,9 +18,7 @@ export class SalesComponent implements OnInit {
   ngOnInit(): void {
     this.getSales(0);
 
-    this.isAdmin = localStorage.getItem('roles')?.includes('admin')
-      ? true
-      : false;
+    this.isAdmin = sessionStorage.getItem('admin') === 'true';
   }
   cancelSale(id: Number) {
     this.service.deleteSale(id).subscribe(() => this.getSales(0));

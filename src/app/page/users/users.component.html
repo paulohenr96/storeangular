@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+  <thead>
+    <th>NAME</th>
+    <th>USERNAME</th>
+    <th>PASSWORD</th>
+    <th>ADMIN</th>
+    <th>SEE</th>
+    <th>DELETE</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of list">
+      <td>{{ u.name }}</td>
+      <td>{{ u.userName }}</td>
+      <td>{{ u.password }}</td>
+      <td>{{ u.rolesName[0] === "admin" ? "TRUE" : "FALSE" }}</td>
+      <td>
+        <button class="btn btn-primary" [routerLink]="'form/' + u.id">
+          SEE
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-primary" (click)="delete(u.id)">DELETE</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

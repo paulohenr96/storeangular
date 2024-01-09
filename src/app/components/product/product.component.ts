@@ -17,9 +17,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts(0);
 
-    this.isAdmin = localStorage.getItem('roles')?.includes('admin')
-      ? true
-      : false;
+    this.isAdmin = localStorage.getItem('admin') === 'true';
   }
 
   getProducts(page: number) {

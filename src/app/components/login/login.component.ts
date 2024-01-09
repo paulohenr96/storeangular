@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/model/user';
+import { Login } from 'src/app/model/login';
 import { LoginService } from 'src/app/service/login.service';
 
 @Component({
@@ -16,14 +16,18 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-  user: User = new User();
+  user: Login = new Login();
   login() {
     this.service.login(this.user).subscribe(
       (data: any) => {
+        console.log(data);
         if (data.fullToken === '') return;
         sessionStorage.setItem('token', data.fullToken);
         sessionStorage.setItem('username', this.user.username);
-        sessionStorage.setItem('roles', data.roles);
+        sessionStorage.setItem(
+          'admin',
+          data.roles[0] === 'admin' ? 'true' : 'false'
+        );
         this.router.navigate(['/home']);
       },
       (error: any) => {

@@ -10,7 +10,7 @@ import { SalesService } from 'src/app/service/sales.service';
   styleUrls: ['./sales.component.css'],
 })
 export class SalesComponent implements OnInit {
-  page: any;
+  page: Page = new Page();
   numbers: number[] = [];
   productSales: ProductSale[] = [];
   isAdmin: Boolean = false;
@@ -24,11 +24,13 @@ export class SalesComponent implements OnInit {
     this.service.deleteSale(id).subscribe(() => this.getSales(0));
   }
 
-  getSales(pageNumber: Number) {
+  getSales(pageNumber: number) {
     console.log(pageNumber);
+    if (pageNumber < 0 || (this.page.last && this.page.number < pageNumber))
+      return;
     this.numbers = [];
     this.service.getSales(pageNumber).subscribe((data: Page) => {
-      console.log('data number => ' + data.number);
+      console.log('data ', data.content);
 
       this.page = data;
       for (var i = 0; i < this.page.totalPages; i++) {

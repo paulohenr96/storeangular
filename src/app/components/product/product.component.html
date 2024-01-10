@@ -95,13 +95,16 @@
           <td>{{ p.price }}</td>
           <td>{{ p.quantity }}</td>
           <td *ngIf="isAdmin">
-            <button class="btn btn-primary" (click)="deleteProduct(p.id)">
+            <button
+              class="btn btn-danger btn-circle"
+              (click)="deleteProduct(p.id)"
+            >
               <i class="bi bi-trash"></i>
             </button>
           </td>
           <td *ngIf="isAdmin">
-            <button class="btn btn-primary" (click)="editProduct(p.id)">
-              <i class="bi bi-pencil"></i>
+            <button class="btn btn-info btn-circle" (click)="editProduct(p.id)">
+              <i class="fas fa-info-circle"></i>
             </button>
           </td>
         </tr>

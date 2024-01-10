@@ -16,6 +16,10 @@ export class BarChartComponent implements OnInit {
   @Input() yAxisLabel: string = 'Sales';
   @Input() data: any[] = [];
   single: any[] = [];
+  @Input()
+  width: number = 1000;
+  @Input()
+  height: number = 400;
 
   constructor(private service: SalesService) {}
 

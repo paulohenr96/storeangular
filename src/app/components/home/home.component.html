@@ -3,7 +3,9 @@
   <!-- Earnings (Monthly) Card Example -->
   <div class="col-xl-3 col-md-6 mb-4">
     <app-card
-      [title]="'Earnings This Month  (' + month + ')'"
+      [title]="
+        isAdmin ? 'Total Earnings This Month' : 'Your Earnings This Month'
+      "
       icon="fas fa-calendar fa-2x text-gray-300"
       [value]="'R$' + total"
       cor="primary"

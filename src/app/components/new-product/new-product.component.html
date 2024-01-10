@@ -109,11 +109,8 @@
       </select>
     </div>
   </div>
-  <div class="alert alert-danger col-3" *ngIf="error" role="alert">
-    <ul>
-      <li *ngFor="let m of msg">{{ m }}</li>
-    </ul>
-  </div>
+  <app-card-danger [arr]="msg"></app-card-danger>
+
   <a
     *ngIf="idProduct == -1"
     (click)="saveProduct()"

@@ -4,4 +4,5 @@ export class User {
   rolesName: string[] = [];
   userName: string = '';
   password: string = '';
+  monthlyGoal: Number = 0;
 }

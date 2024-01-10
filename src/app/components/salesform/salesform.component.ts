@@ -29,12 +29,13 @@ export class SalesformComponent implements OnInit {
   newSale: Sale = new Sale();
   productSale: ProductSale = new ProductSale();
   error: Boolean = false;
-  msg: String[] = [];
+  msg: string[] = [];
   products: Page = new Page();
   totalPrice: number = 0;
   numbers: number[] = [];
   selectedProduct: Product = new Product();
   modalRef: BsModalRef = new BsModalRef();
+  successmsg: string = '';
   constructor(
     private productService: ProductServiceService,
     private service: SalesService,
@@ -45,13 +46,17 @@ export class SalesformComponent implements OnInit {
   }
 
   saveSale() {
+    this.successmsg = '';
     if (!this.verify()) {
       return;
     }
     this.setDate();
 
     this.msg = [];
-    this.service.saveSales(this.newSale).subscribe(() => this.getProducts(0));
+    this.service.saveSales(this.newSale).subscribe(() => {
+      this.successmsg = 'Sale completed .Congratulations !!';
+      this.getProducts(0);
+    });
     this.resetSale();
   }
   selectProduct(p: Product) {

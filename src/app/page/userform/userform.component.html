@@ -9,6 +9,8 @@
       id="name"
       aria-describedby="nameHelp"
     />
+  </div>
+  <div class="mb-3 col-3">
     <label for="username" class="form-label">USERNAME</label>
     <input
       name="username"
@@ -18,6 +20,8 @@
       id="username"
       aria-describedby="usernameHelp"
     />
+  </div>
+  <div class="mb-3 col-3">
     <label for="password" class="form-label">PASSWORD</label>
     <input
       name="password"
@@ -27,12 +31,31 @@
       id="password"
       aria-describedby="passwordHelp"
     />
+  </div>
+  <div class="mb-3 col-3">
+    <label for="password" class="form-label">GOAL</label>
+    <input
+      name="monthlyGoal"
+      type="text"
+      [(ngModel)]="user.monthlyGoal"
+      class="form-control"
+      id="monthlyGoal"
+      aria-describedby="monthlyGoalHelp"
+    />
+  </div>
+  <div class="mb-3 col-3">
     <label for="role" class="form-label">ROLE</label>
-    <select [(ngModel)]="user.rolesName[0]" name="role">
+
+    <select
+      [(ngModel)]="user.rolesName[0]"
+      class="custom-select custom-select-sm form-control form-control-sm"
+      name="role"
+    >
       <option [value]="'user'">USER</option>
       <option [value]="'admin'">ADMIN</option>
     </select>
   </div>
+  <app-card-danger [arr]="erros"></app-card-danger>
 
   <button type="button" class="btn btn-primary m-2" (click)="reset()">
     Reset
@@ -46,7 +69,41 @@
   >
     Submit
   </button>
-  <button type="button" class="btn btn-primary m-2" (click)="edit()">
+  <button
+    type="button"
+    class="btn btn-primary m-2"
+    *ngIf="user.id !== 0"
+    (click)="edit()"
+  >
     Edit
   </button>
 </form>
+<div class="row" *ngIf="user.id !== 0">
+  <div class="col-xl-12 col-lg-7">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+      >
+        <h6 class="m-0 font-weight-bold text-primary">Yearly Sales</h6>
+        <select class="select_year_char" (change)="search()" [(ngModel)]="year">
+          <option [value]="2024">2024</option>
+          <option [value]="2023">2023</option>
+          <option [value]="2022">2022</option>
+        </select>
+        <div class="dropdown no-arrow"></div>
+      </div>
+      <!-- Card Body -->
+
+      <div class="card-body">
+        <div class="chart-area">
+          <app-bar-chart
+            [data]="chartData"
+            [yAxisLabel]="'Sales'"
+            [xAxisLabel]="'Month'"
+          ></app-bar-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sale } from 'src/app/model/sale';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 import { SalesService } from 'src/app/service/sales.service';
+import { UsersService } from 'src/app/service/users.service';
 type dataType = {
   xAxis: number[];
   yAxis: number[];
@@ -26,8 +27,10 @@ export class HomeComponent implements OnInit {
   month: string = '';
   months: string[] = [];
   year: number = 2024;
+  isAdmin: boolean = false;
   constructor(
     private service: SalesService,
+    private userService: UsersService,
     private productService: ProductServiceService
   ) {}
   ngOnInit(): void {
@@ -36,7 +39,7 @@ export class HomeComponent implements OnInit {
       FormStyle.Standalone,
       TranslationWidth.Wide
     ).map((e) => e);
-
+    this.isAdmin = sessionStorage.getItem('admin') === 'true';
     this.findMonth();
     this.getInfo();
     this.getChart(this.year);
@@ -60,8 +63,8 @@ export class HomeComponent implements OnInit {
   }
 
   calculatePercentual() {
-    this.goalIncome = 950;
-
+    this.goalIncome = parseInt(sessionStorage.getItem('goal')!);
+    console.log(sessionStorage.getItem('goal'));
     this.percentual = (100 * this.total) / this.goalIncome;
     if (this.percentual > 100) {
       this.percentual = 100;
@@ -71,7 +74,7 @@ export class HomeComponent implements OnInit {
   getChart(year: number) {
     this.service.getChart(year).subscribe((data: dataType) => {
       this.chartData = this.months.map((e, index) => {
-        const indexOfMonth = data.xAxis.indexOf(index);
+        const indexOfMonth = data.xAxis.indexOf(index + 1);
         return {
           name: e,
           value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,

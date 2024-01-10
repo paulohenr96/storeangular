@@ -17,8 +17,11 @@ export class SalesService {
   constructor(private http: HttpClient) {}
 
   getSales(page: Number): any {
-    return this.http.get(Constants.url_sales + '?page=' + page);
+    return sessionStorage.getItem('admin') === 'true'
+      ? this.http.get(Constants.url_sales + '?page=' + page)
+      : this.http.get(Constants.url_sales + '/username?page=' + page);
   }
+
   getMonthlyTotal(month: Number): any {
     return this.http.get(Constants.url_sales + '/income/' + month);
   }
@@ -34,6 +37,16 @@ export class SalesService {
   }
   getChart(year: number): any {
     return this.http.get(Constants.url_sales + '/chart?year=' + year);
+  }
+  getChartByUsername(year: number, username: string): any {
+    console.log('username => ', username);
+    return this.http.get(
+      Constants.url_sales +
+        '/chart/username?year=' +
+        year +
+        '&username=' +
+        username
+    );
   }
   deleteSale(id: Number): any {
     return this.http.delete(Constants.url_sales + '/' + id).pipe(

@@ -9,6 +9,8 @@ import { LoginService } from 'src/app/service/login.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  erros: string[] = [];
+
   constructor(private router: Router, private service: LoginService) {}
   ngOnInit(): void {
     var token = sessionStorage.getItem('token');
@@ -18,10 +20,16 @@ export class LoginComponent implements OnInit {
   }
   user: Login = new Login();
   login() {
+    this.erros = [];
+    if (!this.checkFields()) return;
     this.service.login(this.user).subscribe(
       (data: any) => {
         console.log(data);
-        if (data.fullToken === '') return;
+        if (data.fullToken === '') {
+          this.erros.push('Invalid Login');
+          return;
+        }
+        sessionStorage.setItem('goal', data.goal);
         sessionStorage.setItem('token', data.fullToken);
         sessionStorage.setItem('username', this.user.username);
         sessionStorage.setItem(
@@ -35,5 +43,12 @@ export class LoginComponent implements OnInit {
         alert('Error');
       }
     );
+  }
+
+  checkFields() {
+    if (!this.user.password) this.erros.push('Put a password...');
+    if (!this.user.username) this.erros.push('Insert a username');
+
+    return this.erros.length === 0;
   }
 }

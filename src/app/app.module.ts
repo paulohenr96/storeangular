@@ -33,6 +33,8 @@ import { PercentualBarComponent } from './percentual-bar/percentual-bar.componen
 import { CardComponent } from './card/card.component';
 import { UsersComponent } from './page/users/users.component';
 import { UserformComponent } from './page/userform/userform.component';
+import { CardDangerComponent } from './components/card-danger/card-danger.component';
+import { CardSuccessComponent } from './components/card-success/card-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +52,8 @@ import { UserformComponent } from './page/userform/userform.component';
     CardComponent,
     UsersComponent,
     UserformComponent,
+    CardDangerComponent,
+    CardSuccessComponent,
   ],
   imports: [
     NgxChartsModule,

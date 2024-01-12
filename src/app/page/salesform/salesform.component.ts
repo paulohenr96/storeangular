@@ -67,23 +67,16 @@ export class SalesformComponent implements OnInit {
 
   verify(): boolean {
     this.msg = [];
-    var error = 0;
-    if (this.newSale.buyer == undefined || this.newSale.buyer.trim() == '') {
+    if (!this.newSale.buyer) {
       this.msg.push('Invalid buyer !');
-      error++;
     }
-    if (
-      this.newSale.products == undefined ||
-      this.newSale.products.length == 0
-    ) {
+    if (this.newSale.products!.length == 0) {
       this.msg.push('No products !');
-      error++;
     }
-    if (this.dateSelected == undefined || this.texto == '') {
+    if (!this.dateSelected || !this.texto) {
       this.msg.push('Select the date !');
-      error++;
     }
-    return error == 0;
+    return this.msg.length == 0;
   }
   setDate() {
     var arr = this.texto.split(' ');
@@ -92,15 +85,9 @@ export class SalesformComponent implements OnInit {
     var min = Number.parseInt(arrtime[1]);
     this.dateSelected!.setHours(hour, min, 0);
     this.newSale.date = this.dateSelected;
-    console.log(this.dateSelected);
-    console.log();
   }
   getProducts(page: number) {
-    if (
-      this.products != undefined &&
-      this.products.last &&
-      page > this.products.number
-    ) {
+    if (this.products && this.products.last && page > this.products.number) {
       return;
     }
     this.productService.getProducts(page).subscribe((data: any) => {
@@ -114,9 +101,9 @@ export class SalesformComponent implements OnInit {
 
   addProduct() {
     if (
-      this.productSale == undefined ||
-      this.productSale.productId == undefined ||
-      this.productSale.quantity == undefined
+      !this.productSale ||
+      !this.productSale.productId ||
+      !this.productSale.quantity
     ) {
       return;
     }

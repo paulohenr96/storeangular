@@ -16,3 +16,7 @@ body {
   justify-content: center;
   color: green;
 }
+
+.pagination {
+  cursor: pointer;
+}

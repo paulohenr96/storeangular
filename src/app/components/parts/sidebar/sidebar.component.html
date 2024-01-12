@@ -15,7 +15,7 @@
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
   <a class="nav-link" href="/home">
-    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <i class="fas fa-fw fa-home"></i>
     <span>HOME</span></a
   >
 </li>
@@ -36,7 +36,7 @@
     aria-expanded="true"
     aria-controls="collapseTwo"
   >
-    <i class="fas fa-fw fa-cog"></i>
+    <i class="fas fa-fw fa-cart-plus"></i>
     <span>Products</span>
   </a>
   <div
@@ -75,7 +75,7 @@
     aria-expanded="true"
     aria-controls="collapseUtilities"
   >
-    <i class="fas fa-fw fa-wrench"></i>
+    <i class="fas fa-fw fa-shopping-bag"></i>
     <span>Sales</span>
   </a>
   <div
@@ -100,7 +100,7 @@
     aria-expanded="true"
     aria-controls="collapseUsers"
   >
-    <i class="fas fa-fw fa-wrench"></i>
+    <i class="fas fa-fw fa-users"></i>
     <span>Users</span>
   </a>
   <div
@@ -116,6 +116,32 @@
     </div>
   </div>
 </li>
+
+<li class="nav-item" *ngIf="role === 'ADMIN'">
+  <a
+    class="nav-link collapsed"
+    href="#"
+    data-toggle="collapse"
+    data-target="#collapseMetrics"
+    aria-expanded="true"
+    aria-controls="collapseMetrics"
+  >
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>Metrics</span>
+  </a>
+  <div
+    id="collapseMetrics"
+    class="collapse"
+    aria-labelledby="headingUtilities"
+    data-parent="#accordionSidebar"
+  >
+    <div class="bg-white py-2 collapse-inner rounded">
+      <h6 class="collapse-header">Metrics:</h6>
+      <a class="collapse-item" routerLink="/metrics">Metrics</a>
+    </div>
+  </div>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider" />
 

@@ -39,7 +39,17 @@
 </div>
 
 <!-- Content Row -->
-
+<div class="row" *ngFor="let p of productsRepo">
+  <a
+    [routerLink]="['/product/newproduct/' + p.id]"
+    class="btn mb-3 btn-warning btn-icon-split col-xl-3 ml-3 col-md-4"
+  >
+    <span class="icon text-white-50">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+    <span class="text">Only {{ p.quantity }} {{ p.name }} in stock.</span>
+  </a>
+</div>
 <div class="row">
   <!-- Area Chart -->
   <div class="col-xl-12 col-lg-7">
@@ -61,7 +71,7 @@
         <div class="chart-area">
           <app-bar-chart
             [data]="chartData"
-            [yAxisLabel]="'Sales'"
+            [yAxisLabel]="'Sales ($)'"
             [xAxisLabel]="'Month'"
           ></app-bar-chart>
         </div>

@@ -4,14 +4,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductComponent } from './components/product/product.component';
-import { NewProductComponent } from './components/new-product/new-product.component';
+import { ProductComponent } from './page/product/product.component';
+import { NewProductComponent } from './page/new-product/new-product.component';
 import { FormsModule } from '@angular/forms'; // Importe o FormsModule
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { SalesComponent } from './components/sales/sales.component';
-import { SalesformComponent } from './components/salesform/salesform.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
+import { SalesComponent } from './page/sales/sales.component';
+import { SalesformComponent } from './page/salesform/salesform.component';
+import { HomeComponent } from './page/home/home.component';
+import { LoginComponent } from './page/login/login.component';
 import { HttpInterceptorService } from './service/http-interceptor.service';
 import { SidebarComponent } from './components/parts/sidebar/sidebar.component';
 import { TopbarComponent } from './components/parts/topbar/topbar.component';
@@ -29,12 +29,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CurveFactory } from 'd3-shape';
 import { ScaleLinear } from 'd3-scale';
 import { BaseType } from 'd3-selection';
-import { PercentualBarComponent } from './percentual-bar/percentual-bar.component';
-import { CardComponent } from './card/card.component';
+import { PercentualBarComponent } from './components/percentual-bar/percentual-bar.component';
+import { CardComponent } from './components/card/card.component';
 import { UsersComponent } from './page/users/users.component';
 import { UserformComponent } from './page/userform/userform.component';
 import { CardDangerComponent } from './components/card-danger/card-danger.component';
 import { CardSuccessComponent } from './components/card-success/card-success.component';
+import { MetricsComponent } from './page/metrics/metrics.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +55,7 @@ import { CardSuccessComponent } from './components/card-success/card-success.com
     UserformComponent,
     CardDangerComponent,
     CardSuccessComponent,
+    MetricsComponent,
   ],
   imports: [
     NgxChartsModule,

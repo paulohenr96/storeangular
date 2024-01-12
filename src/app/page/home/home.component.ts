@@ -4,6 +4,8 @@ import {
   getLocaleMonthNames,
 } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Metrics } from 'src/app/model/metrics';
+import { Product } from 'src/app/model/product';
 import { Sale } from 'src/app/model/sale';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 import { SalesService } from 'src/app/service/sales.service';
@@ -21,9 +23,10 @@ export class HomeComponent implements OnInit {
   total: number = 0;
   count: Number = 0;
   totalQuantity: Number = 0;
-  percentual: number = 50;
+  percentual: number = 0;
   goalIncome: number = 0;
   chartData: any[] = [];
+  productsRepo: Product[] = [];
   month: string = '';
   months: string[] = [];
   year: number = 2024;
@@ -43,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.findMonth();
     this.getInfo();
     this.getChart(this.year);
-
+    this.checkQuantity();
     console.log(this.months);
   }
   findMonth() {
@@ -57,15 +60,24 @@ export class HomeComponent implements OnInit {
         this.totalQuantity = data.sumQuantity;
         this.total = data.income ? data.income : 0;
 
-        this.calculatePercentual();
+        this.setGoal();
       }
     });
   }
-
-  calculatePercentual() {
-    this.goalIncome = parseInt(sessionStorage.getItem('goal')!);
-    console.log(sessionStorage.getItem('goal'));
-    this.percentual = (100 * this.total) / this.goalIncome;
+  setGoal() {
+    if (this.isAdmin) {
+      this.userService.getMetrics().subscribe((data: Metrics) => {
+        console.log(data);
+        const goal = data.monthlyGoal;
+        this.calculatePercentual(goal);
+      });
+      return;
+    }
+    const goal = parseInt(sessionStorage.getItem('goal')!);
+    this.calculatePercentual(goal);
+  }
+  calculatePercentual(goal: number) {
+    this.percentual = (100 * this.total) / goal;
     if (this.percentual > 100) {
       this.percentual = 100;
     }
@@ -85,5 +97,11 @@ export class HomeComponent implements OnInit {
 
   search() {
     this.getChart(this.year);
+  }
+
+  checkQuantity() {
+    this.productService.checkQuantity().subscribe((data: Product[]) => {
+      this.productsRepo = data;
+    });
   }
 }

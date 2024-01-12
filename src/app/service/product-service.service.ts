@@ -31,15 +31,7 @@ export class ProductServiceService {
       })
     );
   }
-  // getTotal(): any {
-  //   return this.http.get(Constants.url_products + '/totalproduct').pipe(
-  //     catchError((error: HttpErrorResponse) => {
-  //       console.error('Error on count() => ', error.message);
-  //       console.error(error);
-  //       return throwError('Error during httprequest');
-  //     })
-  //   );
-  // }
+
   deleteProduct(id: number): any {
     return this.http.delete(Constants.url_products + '/' + id).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -49,14 +41,28 @@ export class ProductServiceService {
       })
     );
   }
+
   getProducts(page: number): any {
-    return this.http.get(Constants.url_products + '?page=' + page).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error on getProducts() => ', error.message);
-        console.error(error);
-        return throwError('Error during httprequest');
-      })
-    );
+    return this.http
+      .get(Constants.url_products + '?page=' + page + '&size=5')
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error on getProducts() => ', error.message);
+          console.error(error);
+          return throwError('Error during httprequest');
+        })
+      );
+  }
+  checkQuantity(): Observable<Product[]> {
+    return this.http
+      .get<Product[]>(Constants.url_products + '/checkquantity')
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error on getProducts() => ', error.error);
+          console.error(error);
+          return throwError('Error during httprequest');
+        })
+      );
   }
 
   getProduct(id: Number): any {

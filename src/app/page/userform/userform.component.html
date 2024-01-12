@@ -33,7 +33,7 @@
     />
   </div>
   <div class="mb-3 col-3">
-    <label for="password" class="form-label">GOAL</label>
+    <label for="password" class="form-label">GOAL ($)</label>
     <input
       name="monthlyGoal"
       type="text"
@@ -78,6 +78,9 @@
     Edit
   </button>
 </form>
+<div class="col-xl-3 col-md-6 mb-4">
+  <app-percentual-bar [percentual]="percentual"></app-percentual-bar>
+</div>
 <div class="row" *ngIf="user.id !== 0">
   <div class="col-xl-12 col-lg-7">
     <div class="card shadow mb-4">
@@ -97,11 +100,26 @@
 
       <div class="card-body">
         <div class="chart-area">
-          <app-bar-chart
+          <!-- <app-bar-chart
+            [functionParam]="getMonthlyIncome"
             [data]="chartData"
             [yAxisLabel]="'Sales'"
             [xAxisLabel]="'Month'"
-          ></app-bar-chart>
+          ></app-bar-chart> -->
+
+          <ngx-charts-bar-vertical
+            [view]="[1000, 400]"
+            [results]="chartData"
+            [xAxis]="true"
+            [yAxis]="true"
+            [legend]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Month'"
+            [yAxisLabel]="'Sales'"
+            (select)="setPercentual($event.value)"
+          >
+          </ngx-charts-bar-vertical>
         </div>
       </div>
     </div>

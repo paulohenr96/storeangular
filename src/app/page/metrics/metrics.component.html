@@ -1,0 +1,19 @@
+<form>
+  <div class="mb-3 col-3">
+    <label for="name" class="form-label">Monthly Goal($)</label>
+    <input
+      name="name"
+      type="text"
+      [(ngModel)]="metrics.monthlyGoal"
+      class="form-control"
+      id="name"
+      aria-describedby="nameHelp"
+    />
+  </div>
+
+  <app-card-danger [arr]="erros"></app-card-danger>
+
+  <button type="button" class="btn btn-primary m-3" (click)="save()">
+    Save
+  </button>
+</form>

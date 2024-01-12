@@ -17,6 +17,7 @@ import { UsersService } from 'src/app/service/users.service';
 })
 export class UserformComponent implements OnInit {
   erros: string[] = [];
+  percentual: number = 0;
   search() {
     this.getChart();
   }
@@ -25,7 +26,7 @@ export class UserformComponent implements OnInit {
   year: number = 2024;
 
   edit() {
-    this.service.edit(this.user).subscribe((s) => alert(s));
+    this.service.edit(this.user).subscribe((s) => this.getMonthlyIncome());
   }
   reset() {
     this.user = new User();
@@ -55,6 +56,7 @@ export class UserformComponent implements OnInit {
         this.service.getById(res['id']).subscribe((u) => {
           this.user = u;
           this.getChart();
+          this.getMonthlyIncome();
         });
       }
     });
@@ -72,11 +74,33 @@ export class UserformComponent implements OnInit {
           .map((e) => e)
           .map((e, index) => {
             const indexOfMonth = data.xAxis.indexOf(index + 1);
+            // if (new Date().getMonth() === indexOfMonth) {
+            //   this.setPercentual(data.yAxis[indexOfMonth]);
+            // }
             return {
               name: e,
               value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,
             };
           });
       });
+  }
+  getMonthlyIncome() {
+    this.saleService
+      .getMonthlyTotal(this.user.userName, new Date().getMonth() + 1)
+      .subscribe((data: any) => this.setPercentual(data));
+  }
+  setPercentual(value: any) {
+    if (!this.user) {
+      console.error('this.user não foi definido...');
+      return;
+    }
+    this.percentual =
+      value > this.user.monthlyGoal
+        ? 100
+        : (100 * value.valueOf()) / this.user.monthlyGoal.valueOf();
+  }
+
+  select($event: any) {
+    this.setPercentual($event.value);
   }
 }

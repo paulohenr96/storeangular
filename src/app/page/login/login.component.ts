@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkFields() {
-    if (!this.user.password) this.erros.push('Put a password...');
+    if (!this.user.password) this.erros.push('Insert a password...');
     if (!this.user.username) this.erros.push('Insert a username');
 
     return this.erros.length === 0;

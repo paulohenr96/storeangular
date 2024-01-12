@@ -18,12 +18,29 @@ export class SalesService {
 
   getSales(page: Number): any {
     return sessionStorage.getItem('admin') === 'true'
-      ? this.http.get(Constants.url_sales + '?page=' + page)
-      : this.http.get(Constants.url_sales + '/username?page=' + page);
+      ? this.http.get(Constants.url_sales + '?page=' + page + '&size=5')
+      : this.http.get(
+          Constants.url_sales + '/username?page=' + page + '&size=5'
+        );
   }
 
-  getMonthlyTotal(month: Number): any {
-    return this.http.get(Constants.url_sales + '/income/' + month);
+  getMonthlyTotal(username: string, month: Number): any {
+    return this.http
+      .get(
+        Constants.url_sales +
+          '/income/user?username=' +
+          username +
+          '&month=' +
+          month
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error on savesale() => ', error.message);
+          console.error(error);
+          alert('Error saving sale...');
+          return throwError('Error during httprequest');
+        })
+      );
   }
   saveSales(sale: Sale): any {
     return this.http.post(Constants.url_sales, sale).pipe(

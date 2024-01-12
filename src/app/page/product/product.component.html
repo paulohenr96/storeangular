@@ -72,25 +72,25 @@
 <div class="card-body">
   <div class="table-responsive">
     <table
-      class="table table-bordered"
+      class="table table-bordered text-center"
       id="dataTable"
       width="100%"
       cellspacing="0"
     >
       <thead>
         <tr>
-          <th scope="col">ID</th>
+          <!-- <th scope="col">ID</th> -->
           <th scope="col">NAME</th>
           <th scope="col">PRICE</th>
           <th scope="col">QUANTITY</th>
           <th scope="col" *ngIf="isAdmin">REMOVE</th>
-          <th scope="col" *ngIf="isAdmin">EDIT</th>
+          <th scope="col">EDIT</th>
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let p of products.content">
-          <th scope="row">{{ p.id }}</th>
+          <!-- <th scope="row">{{ p.id }}</th> -->
           <td>{{ p.name }}</td>
           <td>{{ p.price }}</td>
           <td>{{ p.quantity }}</td>
@@ -102,7 +102,7 @@
               <i class="bi bi-trash"></i>
             </button>
           </td>
-          <td *ngIf="isAdmin">
+          <td>
             <button class="btn btn-info btn-circle" (click)="editProduct(p.id)">
               <i class="fas fa-info-circle"></i>
             </button>

@@ -20,11 +20,16 @@ export class NewProductComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     var param = this.activatedRouter.snapshot.paramMap.get('idProduct');
-    if (param != null && param != undefined) {
-      this.idProduct = Number.parseInt(param);
-      this.getProduct();
+    if (param) {
+      this.getProduct(Number.parseInt(param));
       return;
     }
+    this.activatedRouter.params.subscribe((p) => {
+      if (p['id']) {
+        this.getProduct(p['id']);
+        return;
+      }
+    });
     this.newProduct = new Product();
   }
   cleanForm() {
@@ -40,36 +45,28 @@ export class NewProductComponent implements OnInit {
     // alert(this.newProduct.category);
   }
 
-  getProduct() {
-    this.service.getProduct(this.idProduct).subscribe((data: Product) => {
+  getProduct(id: number) {
+    this.service.getProduct(id).subscribe((data: Product) => {
       this.newProduct = data;
       console.log(this.newProduct);
     });
   }
 
   validate(): boolean {
-    this.error = false;
     this.msg = [];
-    if (
-      this.newProduct.name == undefined ||
-      this.newProduct.name.trim() == ''
-    ) {
+    if (!this.newProduct.name) {
       this.msg.push('Invalid name...');
-      this.error = true;
     }
-    if (
-      this.newProduct.quantity == undefined ||
-      isNaN(this.newProduct.quantity)
-    ) {
+    if (isNaN(this.newProduct.quantity!)) {
       this.msg.push('Invalid quantity...');
-      this.error = true;
     }
-    if (this.newProduct.price == undefined || isNaN(this.newProduct.price)) {
+    if (isNaN(this.newProduct.price!)) {
       this.msg.push('Invalid price...');
-      this.error = true;
     }
-
-    return !this.error;
+    if (!this.newProduct.category) {
+      this.msg.push('Invalid category...');
+    }
+    return this.msg.length == 0;
   }
 
   editProduct() {

@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private service: LoginService) {}
   ngOnInit(): void {
     var token = sessionStorage.getItem('token');
-    if (!(token == '' || token == undefined)) {
+    if (token) {
       this.router.navigate(['/home']);
     }
   }
@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     if (!this.checkFields()) return;
     this.service.login(this.user).subscribe(
       (data: any) => {
-        console.log(data);
         if (data.fullToken === '') {
           this.erros.push('Invalid Login');
           return;

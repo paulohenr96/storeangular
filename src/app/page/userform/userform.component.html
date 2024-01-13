@@ -21,17 +21,18 @@
       aria-describedby="usernameHelp"
     />
   </div>
-  <div class="mb-3 col-3">
+  <!-- <div class="mb-3 col-3">
     <label for="password" class="form-label">PASSWORD</label>
     <input
       name="password"
-      type="text"
+      type="password"
+      [readonly]="user.id != 0"
       [(ngModel)]="user.password"
       class="form-control"
       id="password"
       aria-describedby="passwordHelp"
     />
-  </div>
+  </div> -->
   <div class="mb-3 col-3">
     <label for="password" class="form-label">GOAL ($)</label>
     <input
@@ -56,6 +57,7 @@
     </select>
   </div>
   <app-card-danger [arr]="erros"></app-card-danger>
+  <app-card-success [msg]="msgSucesso"></app-card-success>
 
   <button type="button" class="btn btn-primary m-2" (click)="reset()">
     Reset
@@ -73,12 +75,22 @@
     type="button"
     class="btn btn-primary m-2"
     *ngIf="user.id !== 0"
-    (click)="edit()"
+    data-bs-target="#modalConfirm"
+    data-bs-toggle="modal"
   >
     Edit
   </button>
+  <button
+    type="button"
+    class="btn btn-primary m-2"
+    *ngIf="user.id !== 0"
+    data-bs-target="#modalPassword"
+    data-bs-toggle="modal"
+  >
+    Change Password
+  </button>
 </form>
-<div class="col-xl-3 col-md-6 mb-4">
+<div class="col-xl-3 col-md-6 mb-4" *ngIf="user.id !== 0">
   <app-percentual-bar [percentual]="percentual"></app-percentual-bar>
 </div>
 <div class="row" *ngIf="user.id !== 0">
@@ -121,6 +133,119 @@
           >
           </ngx-charts-bar-vertical>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="modalConfirm"
+  tabindex="-1"
+  aria-labelledby="modalConfirmLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h1>Please confirm your password...</h1>
+
+        <div class="mb-3 col-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            name="passwordConfirm"
+            type="password"
+            [(ngModel)]="passwordConfirm"
+            class="form-control"
+            id="passwordConfirm"
+            aria-describedby="passwordConfirmHelp"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="checkPassword()"
+          data-bs-dismiss="modal"
+        >
+          Confirm Password
+        </button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          NO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalPassword"
+  tabindex="-1"
+  aria-labelledby="modalPasswordLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPasswordLabel">RESET PASSWORD</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h1>Please confirm your password...</h1>
+
+        <div class="mb-3 col-8">
+          <label for="password" class="form-label">New User's password</label>
+          <input
+            name="newpassword"
+            type="password"
+            [(ngModel)]="newPassword"
+            class="form-control"
+            id="newpassword"
+            aria-describedby="newpasswordHelp"
+          />
+        </div>
+
+        <div class="mb-3 col-8">
+          <label for="password" class="form-label">Confirm Your Password</label>
+          <input
+            name="passwordConfirm"
+            type="password"
+            [(ngModel)]="passwordConfirm"
+            class="form-control"
+            id="passwordConfirm"
+            aria-describedby="passwordConfirmHelp"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="changePassword()"
+        >
+          Change Password
+        </button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>

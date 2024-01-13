@@ -16,6 +16,19 @@ import { UsersService } from 'src/app/service/users.service';
   styleUrls: ['./userform.component.css'],
 })
 export class UserformComponent implements OnInit {
+  passwordConfirm: string = '';
+  msgSucesso: string = '';
+  newPassword: string = '';
+  checkPassword() {
+    this.erros = [];
+    this.service.confirmPassword(this.passwordConfirm).subscribe((s) => {
+      if (s) {
+        this.edit();
+        return;
+      }
+      this.erros.push('Wrong password !!');
+    });
+  }
   erros: string[] = [];
   percentual: number = 0;
   search() {
@@ -26,7 +39,10 @@ export class UserformComponent implements OnInit {
   year: number = 2024;
 
   edit() {
-    this.service.edit(this.user).subscribe((s) => this.getMonthlyIncome());
+    this.service.edit(this.user).subscribe((s) => {
+      this.msgSucesso = 'User edited.';
+      this.getMonthlyIncome();
+    });
   }
   reset() {
     this.user = new User();
@@ -41,7 +57,12 @@ export class UserformComponent implements OnInit {
   }
   submit() {
     if (!this.validate()) return;
-    this.service.save(this.user).subscribe();
+    this.service.save(this.user).subscribe((s: string) => {
+      console.log(s);
+      if (s.trim() !== '') {
+        this.erros.push(s);
+      }
+    });
   }
   user: User = new User();
   constructor(
@@ -74,9 +95,7 @@ export class UserformComponent implements OnInit {
           .map((e) => e)
           .map((e, index) => {
             const indexOfMonth = data.xAxis.indexOf(index + 1);
-            // if (new Date().getMonth() === indexOfMonth) {
-            //   this.setPercentual(data.yAxis[indexOfMonth]);
-            // }
+
             return {
               name: e,
               value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,
@@ -87,20 +106,36 @@ export class UserformComponent implements OnInit {
   getMonthlyIncome() {
     this.saleService
       .getMonthlyTotal(this.user.userName, new Date().getMonth() + 1)
-      .subscribe((data: any) => this.setPercentual(data));
+      .subscribe((data: any) => {
+        if (data) this.setPercentual(data);
+      });
   }
   setPercentual(value: any) {
     if (!this.user) {
       console.error('this.user não foi definido...');
       return;
     }
-    this.percentual =
-      value > this.user.monthlyGoal
-        ? 100
-        : (100 * value.valueOf()) / this.user.monthlyGoal.valueOf();
+    this.percentual = (100 * value.valueOf()) / this.user.monthlyGoal.valueOf();
   }
 
   select($event: any) {
     this.setPercentual($event.value);
+  }
+
+  changePassword() {
+    this.service.confirmPassword(this.passwordConfirm).subscribe((s) => {
+      if (s) {
+        const u: User = {
+          id: this.user.id,
+          name: '',
+          rolesName: [],
+          userName: '',
+          password: this.newPassword,
+          monthlyGoal: 0,
+        };
+
+        this.service.newPassword(u).subscribe((data: any) => {});
+      }
+    });
   }
 }

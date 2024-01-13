@@ -8,4 +8,10 @@ import { Component, Input } from '@angular/core';
 export class CardSuccessComponent {
   @Input()
   msg: string = '';
+
+  constructor() {
+    setInterval(() => {
+      this.msg = '';
+    }, 5000);
+  }
 }

@@ -97,7 +97,9 @@
           <td *ngIf="isAdmin">
             <button
               class="btn btn-danger btn-circle"
-              (click)="deleteProduct(p.id)"
+              data-bs-target="#modalConfirm"
+              data-bs-toggle="modal"
+              (click)="setProductDelete(p.id)"
             >
               <i class="bi bi-trash"></i>
             </button>
@@ -150,5 +152,42 @@
         </li>
       </ul>
     </nav>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalConfirm"
+  tabindex="-1"
+  aria-labelledby="modalConfirmLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body"><h1>Are you sure ?</h1></div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="deleteProduct()"
+          data-bs-dismiss="modal"
+        >
+          YES
+        </button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          NO
+        </button>
+      </div>
+    </div>
   </div>
 </div>

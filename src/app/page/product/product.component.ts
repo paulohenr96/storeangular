@@ -10,9 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+  setProductDelete(id: any) {
+    this.idDeleteProduct = id;
+  }
   products: any;
   numbers: number[] = [];
   isAdmin: boolean = false;
+
+  idDeleteProduct: number = 0;
   constructor(private router: Router, private service: ProductServiceService) {}
   ngOnInit(): void {
     this.getProducts(0);
@@ -29,9 +34,10 @@ export class ProductComponent implements OnInit {
       }
     });
   }
-  deleteProduct(id: number) {
-    alert(id);
-    this.service.deleteProduct(id).subscribe(() => this.getProducts(0));
+  deleteProduct() {
+    this.service
+      .deleteProduct(this.idDeleteProduct)
+      .subscribe(() => this.getProducts(0));
   }
 
   editProduct(product: Number) {

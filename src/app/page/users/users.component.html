@@ -1,8 +1,8 @@
-<table class="table table-bordered">
+<table class="table table-bordered text-center">
   <thead>
     <th>NAME</th>
     <th>USERNAME</th>
-    <th>PASSWORD</th>
+    <!-- <th>PASSWORD</th> -->
     <th>ADMIN</th>
     <th>SEE</th>
     <th>DELETE</th>
@@ -11,7 +11,7 @@
     <tr *ngFor="let u of list">
       <td>{{ u.name }}</td>
       <td>{{ u.userName }}</td>
-      <td>{{ u.password }}</td>
+      <!-- <td>{{ u.password }}</td> -->
       <td>{{ u.rolesName[0] === "admin" ? "TRUE" : "FALSE" }}</td>
       <td>
         <button class="btn btn-info btn-circle" [routerLink]="'form/' + u.id">
@@ -19,10 +19,51 @@
         </button>
       </td>
       <td>
-        <button class="btn btn-danger btn-circle" (click)="delete(u.id)">
+        <button
+          class="btn btn-danger btn-circle"
+          (click)="setUserDelete(u.id)"
+          data-bs-target="#modalConfirm"
+          data-bs-toggle="modal"
+        >
           <i class="bi bi-trash"></i>
         </button>
       </td>
     </tr>
   </tbody>
 </table>
+<div
+  class="modal fade"
+  id="modalConfirm"
+  tabindex="-1"
+  aria-labelledby="modalConfirmLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body"><h1>Are you sure ?</h1></div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="delete()"
+          data-bs-dismiss="modal"
+        >
+          YES
+        </button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          NO
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

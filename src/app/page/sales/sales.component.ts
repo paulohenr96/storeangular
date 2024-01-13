@@ -10,18 +10,25 @@ import { SalesService } from 'src/app/service/sales.service';
   styleUrls: ['./sales.component.css'],
 })
 export class SalesComponent implements OnInit {
+  setCancelSale(arg0: any) {
+    console.log(arg0);
+    this.idCancelSale = arg0;
+  }
   page: Page = new Page();
   numbers: number[] = [];
   productSales: ProductSale[] = [];
   isAdmin: Boolean = false;
+  idCancelSale: number = 0;
   constructor(private service: SalesService) {}
   ngOnInit(): void {
     this.getSales(0);
 
     this.isAdmin = sessionStorage.getItem('admin') === 'true';
   }
-  cancelSale(id: Number) {
-    this.service.deleteSale(id).subscribe(() => this.getSales(0));
+  cancel() {
+    this.service
+      .deleteSale(this.idCancelSale)
+      .subscribe(() => this.getSales(0));
   }
 
   getSales(pageNumber: number) {

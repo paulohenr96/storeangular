@@ -2,13 +2,21 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { Constants } from '../constants';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { Metrics } from '../model/metrics';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  newPassword(u: User) {
+    return this.http.put<String>(Constants.url + '/users/newpassword', u).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError('Error during httprequest');
+      })
+    );
+  }
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<User[]> {
@@ -37,12 +45,10 @@ export class UsersService {
     );
   }
 
-  save(user: User): Observable<String> {
-    console.log(user);
-    return this.http.post<String>(Constants.url + '/users', user).pipe(
+  save(user: User): Observable<string> {
+    return this.http.post<string>(Constants.url + '/users', user).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error(error);
-        return throwError('Error during httprequest');
+        return error.status === 409 ? of('Invalid username') : of('Error');
       })
     );
   }
@@ -53,6 +59,16 @@ export class UsersService {
         return throwError('Error during httprequest');
       })
     );
+  }
+  confirmPassword(pass: String): Observable<String> {
+    return this.http
+      .post<String>(Constants.url + '/users/confirmpassword', pass)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return throwError('Error during httprequest');
+        })
+      );
   }
   getMetrics(): Observable<Metrics> {
     return this.http.get<Metrics>(Constants.url + '/users/metrics').pipe(

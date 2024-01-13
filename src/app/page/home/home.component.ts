@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
     this.getInfo();
     this.getChart(this.year);
     this.checkQuantity();
-    console.log(this.months);
   }
   findMonth() {
     this.month = this.months[new Date().getMonth()];
@@ -55,7 +54,6 @@ export class HomeComponent implements OnInit {
   getInfo() {
     this.productService.getInfo().subscribe((data: any) => {
       if (data != null) {
-        console.log(data);
         this.count = data.totalProduct;
         this.totalQuantity = data.sumQuantity;
         this.total = data.income ? data.income : 0;
@@ -67,7 +65,6 @@ export class HomeComponent implements OnInit {
   setGoal() {
     if (this.isAdmin) {
       this.userService.getMetrics().subscribe((data: Metrics) => {
-        console.log(data);
         const goal = data.monthlyGoal;
         this.calculatePercentual(goal);
       });
@@ -78,9 +75,6 @@ export class HomeComponent implements OnInit {
   }
   calculatePercentual(goal: number) {
     this.percentual = (100 * this.total) / goal;
-    if (this.percentual > 100) {
-      this.percentual = 100;
-    }
   }
 
   getChart(year: number) {

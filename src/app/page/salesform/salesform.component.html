@@ -1,5 +1,5 @@
 <form>
-  <div class="container_price">
+  <div class="container_price" *ngIf="totalPrice > 0">
     <div class="col-xl-3 col-md-6 mb-4">
       <app-card
         title="TOTAL"
@@ -21,32 +21,7 @@
       aria-describedby="buyerHelp"
     />
   </div>
-  <div class="mb-3 col-3">
-    <mat-form-field>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        placeholder="Escolha uma data"
-        readonly
-        (dateChange)="onDateSelected($event)"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <!-- <button mat-raised-button (click)="picker.open()">Open</button> -->
 
-    <div class="12hr-example">
-      <input
-        placeholder="Period of the day"
-        aria-label="12hr format"
-        class="form-control"
-        [ngxTimepicker]="default"
-        [(ngModel)]="texto"
-        [ngModelOptions]="{ standalone: true }"
-      />
-      <ngx-material-timepicker #default></ngx-material-timepicker>
-    </div>
-  </div>
   <div class="alert alert-danger col-3" *ngIf="error" role="alert">
     <ul>
       <li *ngFor="let m of msg">{{ m }}</li>

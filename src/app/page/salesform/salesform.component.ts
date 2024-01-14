@@ -73,18 +73,20 @@ export class SalesformComponent implements OnInit {
     if (this.newSale.products!.length == 0) {
       this.msg.push('No products !');
     }
-    if (!this.dateSelected || !this.texto) {
-      this.msg.push('Select the date !');
-    }
+    // if (!this.dateSelected || !this.texto) {
+    //   this.msg.push('Select the date !');
+    // }
     return this.msg.length == 0;
   }
   setDate() {
-    var arr = this.texto.split(' ');
-    var arrtime = arr[0].split(':');
-    var hour = Number.parseInt(arrtime[0]);
-    var min = Number.parseInt(arrtime[1]);
-    this.dateSelected!.setHours(hour, min, 0);
-    this.newSale.date = this.dateSelected;
+    // var arr = this.texto.split(' ');
+    // var arrtime = arr[0].split(':');
+    // var hour = Number.parseInt(arrtime[0]);
+    // var min = Number.parseInt(arrtime[1]);
+    // this.dateSelected!.setHours(hour, min, 0);
+    const options = { timeZone: 'America/Sao_Paulo' };
+
+    this.newSale.date = new Date(new Date().toLocaleString('en-US', options));
   }
   getProducts(page: number) {
     if (this.products && this.products.last && page > this.products.number) {

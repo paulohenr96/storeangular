@@ -52,7 +52,7 @@ export class UserformComponent implements OnInit {
     if (!this.user.name) this.erros.push('Insert a name');
     if (!this.user.userName) this.erros.push('Insert a username');
     if (!this.user.password) this.erros.push('Insert a password');
-    if (this.user.rolesName.length === 0) this.erros.push('Chose a role');
+    if (this.user.rolesName.length === 0) this.erros.push('Choose a role');
     return this.erros.length === 0;
   }
   submit() {
@@ -112,7 +112,6 @@ export class UserformComponent implements OnInit {
   }
   setPercentual(value: any) {
     if (!this.user) {
-      console.error('this.user não foi definido...');
       return;
     }
     this.percentual = (100 * value.valueOf()) / this.user.monthlyGoal.valueOf();

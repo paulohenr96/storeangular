@@ -16,6 +16,7 @@ export class MetricsComponent {
   }
 
   save() {
+    if (!isNaN(this.metrics.monthlyGoal)) return;
     this.service.editMetrics(this.metrics).subscribe((data: any) => {});
   }
 

@@ -10,14 +10,23 @@ import { UsersService } from 'src/app/service/users.service';
 export class MetricsComponent {
   metrics: Metrics = new Metrics();
   erros: string[] = [];
+  msgSucesso: string = '';
 
   constructor(private service: UsersService) {
     this.getMetrics();
   }
 
   save() {
-    if (!isNaN(this.metrics.monthlyGoal)) return;
-    this.service.editMetrics(this.metrics).subscribe((data: any) => {});
+    this.msgSucesso = '';
+
+    if (isNaN(this.metrics.monthlyGoal)) {
+      this.erros.push('Invalid value');
+      return;
+    }
+    this.service.editMetrics(this.metrics).subscribe((data: any) => {
+      this.msgSucesso = 'Done.';
+      console.log(this.msgSucesso);
+    });
   }
 
   getMetrics() {

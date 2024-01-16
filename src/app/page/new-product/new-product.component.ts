@@ -40,7 +40,7 @@ export class NewProductComponent implements OnInit {
   saveProduct() {
     if (this.validate()) {
       this.service.saveproduct(this.newProduct).subscribe((data: any) => {
-        this.msgSucesso = 'The product was added in the stock';
+        this.msgSucesso = 'The product was added to the inventory';
         this.newProduct = new Product();
       });
     }
@@ -77,7 +77,6 @@ export class NewProductComponent implements OnInit {
         this.idProduct = -1;
         this.newProduct = new Product();
         this.msgSucesso = 'The product was successful edited.';
-        this.router.navigate(['/product']);
       });
     }
   }

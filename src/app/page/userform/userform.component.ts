@@ -22,7 +22,9 @@ export class UserformComponent implements OnInit {
   checkPassword() {
     this.erros = [];
     this.service.confirmPassword(this.passwordConfirm).subscribe((s) => {
-      if (s) {
+      console.log(s);
+      if (s.response === 'true') {
+        this.passwordConfirm = '';
         this.edit();
         return;
       }
@@ -40,7 +42,13 @@ export class UserformComponent implements OnInit {
 
   edit() {
     this.service.edit(this.user).subscribe((s) => {
-      this.msgSucesso = 'User edited.';
+      console.log(s);
+      if (!s) {
+        this.msgSucesso = 'User edited.';
+        return;
+      }
+      this.erros.push(s.response);
+
       this.getMonthlyIncome();
     });
   }
@@ -137,7 +145,9 @@ export class UserformComponent implements OnInit {
           monthlyGoal: 0,
         };
 
-        this.service.newPassword(u).subscribe((data: any) => {});
+        this.service
+          .newPassword(u)
+          .subscribe((data) => (this.msgSucesso = 'Password changed.'));
       }
     });
   }

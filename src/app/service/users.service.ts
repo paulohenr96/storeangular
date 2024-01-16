@@ -35,9 +35,9 @@ export class UsersService {
       })
     );
   }
-  edit(user: User): Observable<String> {
+  edit(user: User): Observable<any> {
     console.log(user);
-    return this.http.put<String>(Constants.url + '/users', user).pipe(
+    return this.http.put<any>(Constants.url + '/users', user).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         return throwError('Error during httprequest');
@@ -60,9 +60,9 @@ export class UsersService {
       })
     );
   }
-  confirmPassword(pass: String): Observable<String> {
+  confirmPassword(pass: String): Observable<any> {
     return this.http
-      .post<String>(Constants.url + '/users/confirmpassword', pass)
+      .post<any>(Constants.url + '/users/confirmpassword', pass)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error(error);

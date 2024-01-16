@@ -13,6 +13,7 @@ export class NewProductComponent implements OnInit {
   idProduct: Number = -1;
   error: Boolean = false;
   msg: string[] = [];
+  msgSucesso: string = '';
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -38,9 +39,10 @@ export class NewProductComponent implements OnInit {
 
   saveProduct() {
     if (this.validate()) {
-      this.service
-        .saveproduct(this.newProduct)
-        .subscribe((this.newProduct = new Product()));
+      this.service.saveproduct(this.newProduct).subscribe((data: any) => {
+        this.msgSucesso = 'The product was added in the stock';
+        this.newProduct = new Product();
+      });
     }
     // alert(this.newProduct.category);
   }
@@ -57,10 +59,10 @@ export class NewProductComponent implements OnInit {
     if (!this.newProduct.name) {
       this.msg.push('Invalid name...');
     }
-    if (isNaN(this.newProduct.quantity!)) {
+    if (isNaN(this.newProduct.quantity!) || this.newProduct.quantity <= 0) {
       this.msg.push('Invalid quantity...');
     }
-    if (isNaN(this.newProduct.price!)) {
+    if (isNaN(this.newProduct.price!) || this.newProduct.price <= 0) {
       this.msg.push('Invalid price...');
     }
     if (!this.newProduct.category) {
@@ -74,6 +76,7 @@ export class NewProductComponent implements OnInit {
       this.service.editProduct(this.newProduct).subscribe(() => {
         this.idProduct = -1;
         this.newProduct = new Product();
+        this.msgSucesso = 'The product was successful edited.';
         this.router.navigate(['/product']);
       });
     }

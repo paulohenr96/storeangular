@@ -69,11 +69,15 @@ export class UserformComponent implements OnInit {
   }
   submit() {
     if (!this.validate()) return;
-    this.service.save(this.user).subscribe((s: string) => {
+    this.service.save(this.user).subscribe((s: any) => {
       console.log(s);
-      if (s.trim() !== '') {
-        this.erros.push(s);
+      if (!s) {
+        this.msgSucesso = 'User saved.';
+        this.user = new User();
+        return;
       }
+
+      this.erros.push(s.response);
     });
   }
   user: User = new User();

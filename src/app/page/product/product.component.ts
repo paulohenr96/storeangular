@@ -10,6 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+  search(n: number) {
+    if (this.category === '') {
+      this.getProducts(n);
+      return;
+    }
+    this.getProductsByCategory(n);
+  }
+  category: string = '';
   setProductDelete(id: any) {
     this.idDeleteProduct = id;
   }
@@ -20,18 +28,20 @@ export class ProductComponent implements OnInit {
   idDeleteProduct: number = 0;
   constructor(private router: Router, private service: ProductServiceService) {}
   ngOnInit(): void {
-    this.getProducts(0);
-
+    this.search(0);
     this.isAdmin = sessionStorage.getItem('admin') === 'true';
   }
 
   getProducts(page: number) {
     this.service.getProducts(page).subscribe((data: Page) => {
       this.products = data;
-      this.numbers = [];
-      for (var i = 0; i < this.products.totalPages; i++) {
-        this.numbers.push(i);
-      }
+      if (page === 0)
+        this.numbers = Array.from(Array(this.products.totalPages).keys());
+
+      // this.numbers = [];
+      // for (var i = 0; i < this.products.totalPages; i++) {
+      //   this.numbers.push(i);
+      // }
     });
   }
   deleteProduct() {
@@ -42,5 +52,15 @@ export class ProductComponent implements OnInit {
 
   editProduct(product: Number) {
     this.router.navigate(['/product/newproduct', { idProduct: product }]);
+  }
+
+  getProductsByCategory(page: number) {
+    this.service
+      .getProductsByCategory(page, this.category)
+      .subscribe((data: any) => {
+        this.products = data;
+        if (page === 0)
+          this.numbers = Array.from(Array(this.products.totalPages).keys());
+      });
   }
 }

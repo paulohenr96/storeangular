@@ -123,8 +123,4 @@ export class SalesformComponent implements OnInit {
     this.newSale = new Sale();
     this.productSale = new ProductSale();
   }
-
-  onDateSelected(event: any) {
-    this.dateSelected = event.value;
-  }
 }

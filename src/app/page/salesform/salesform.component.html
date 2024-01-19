@@ -1,4 +1,5 @@
 <form>
+  <h1 class="text-center">New Sale</h1>
   <div class="container_price" *ngIf="totalPrice > 0">
     <div class="col-xl-3 col-md-6 mb-4">
       <app-card
@@ -33,7 +34,6 @@
   <button type="button" (click)="resetSale()" class="btn btn-primary m-2">
     Reset
   </button>
-
   <button type="button" class="btn btn-primary m-2" (click)="saveSale()">
     Submit Sale
   </button>
@@ -47,6 +47,7 @@
     See Products
   </button>
 </form>
+<h3 class="text-center">Products in Inventory</h3>
 
 <table class="table table-bordered" *ngIf="!products.empty">
   <thead>

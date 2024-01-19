@@ -34,7 +34,7 @@
   <ul class="pagination justify-content-center">
     <li
       class="page-item"
-      (click)="getProducts(products.number - 1)"
+      (click)="search(products.number - 1)"
       *ngIf="products.number != 0"
     >
       <a class="page-link">Previous</a>
@@ -42,7 +42,7 @@
 
     <li
       class="page-item disabled"
-      (click)="getProducts(products.number - 1)"
+      (click)="search(products.number - 1)"
       *ngIf="products.number == 0"
     >
       <a class="page-link">Previous</a>
@@ -51,28 +51,44 @@
       <li
         class="page-item active"
         *ngIf="products.number == n"
-        (click)="getProducts(n)"
+        (click)="search(n)"
       >
         <a class="page-link">{{ n + 1 }}</a>
       </li>
       <li
         class="page-item"
         *ngIf="products.number != n"
-        (click)="getProducts(n)"
+        (click)="search(n)"
       >
         <a class="page-link">{{ n + 1 }}</a>
       </li>
     </div>
 
-    <li class="page-item" (click)="getProducts(products.number + 1)">
+    <li class="page-item" (click)="search(products.number + 1)">
       <a class="page-link" *ngIf="!products.last">Next</a>
     </li>
   </ul>
 </nav> -->
 <div class="card-body">
-  <h1 class="text-center">List of Products ({{ products.totalElements }})</h1>
+  <h1 class="text-center" *ngIf="products.totalElements">
+    List of Products ({{ products.totalElements }})
+  </h1>
+  <div class="col-sm-2 mb-3">
+    <select
+      name="category"
+      class="form-select form-select-md mb-3"
+      [(ngModel)]="category"
+      (change)="search(0)"
+    >
+      <option [value]="''">All</option>
 
-  <div class="table-responsive">
+      <option [value]="'clothes'">Clothes</option>
+      <option [value]="'gym'">Gym</option>
+      <option [value]="'shoes'">Shoes</option>
+    </select>
+  </div>
+
+  <div class="table-responsive" *ngIf="products">
     <table
       class="table table-bordered text-center"
       id="dataTable"
@@ -85,6 +101,8 @@
           <th scope="col">NAME</th>
           <th scope="col">PRICE</th>
           <th scope="col">QUANTITY</th>
+          <th scope="col">CATEGORY</th>
+
           <th scope="col" *ngIf="isAdmin">REMOVE</th>
           <th scope="col">EDIT</th>
         </tr>
@@ -96,6 +114,8 @@
           <td>{{ p.name }}</td>
           <td>{{ p.price }}</td>
           <td>{{ p.quantity }}</td>
+          <td>{{ p.category }}</td>
+
           <td *ngIf="isAdmin">
             <button
               class="btn btn-danger btn-circle"
@@ -119,7 +139,7 @@
       <ul class="pagination justify-content-center">
         <li
           class="page-item"
-          (click)="getProducts(products.number - 1)"
+          (click)="search(products.number - 1)"
           *ngIf="products.number != 0"
         >
           <a class="page-link">Previous</a>
@@ -127,7 +147,7 @@
 
         <li
           class="page-item disabled"
-          (click)="getProducts(products.number - 1)"
+          (click)="search(products.number - 1)"
           *ngIf="products.number == 0"
         >
           <a class="page-link">Previous</a>
@@ -136,20 +156,20 @@
           <li
             class="page-item active"
             *ngIf="products.number == n"
-            (click)="getProducts(n)"
+            (click)="search(n)"
           >
             <a class="page-link">{{ n + 1 }}</a>
           </li>
           <li
             class="page-item"
             *ngIf="products.number != n"
-            (click)="getProducts(n)"
+            (click)="search(n)"
           >
             <a class="page-link">{{ n + 1 }}</a>
           </li>
         </div>
 
-        <li class="page-item" (click)="getProducts(products.number + 1)">
+        <li class="page-item" (click)="search(products.number + 1)">
           <a class="page-link" *ngIf="!products.last">Next</a>
         </li>
       </ul>

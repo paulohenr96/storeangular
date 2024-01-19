@@ -53,6 +53,24 @@ export class ProductServiceService {
         })
       );
   }
+  getProductsByCategory(page: number, category: String): any {
+    return this.http
+      .get(
+        Constants.url_products +
+          '/category/' +
+          category +
+          '?page=' +
+          page +
+          '&size=5'
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error on getProducts() => ', error.message);
+          console.error(error);
+          return throwError('Error during httprequest');
+        })
+      );
+  }
   checkQuantity(): Observable<Product[]> {
     return this.http
       .get<Product[]>(Constants.url_products + '/checkquantity')

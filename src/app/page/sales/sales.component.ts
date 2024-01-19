@@ -32,17 +32,12 @@ export class SalesComponent implements OnInit {
   }
 
   getSales(pageNumber: number) {
-    console.log(pageNumber);
     if (pageNumber < 0 || (this.page.last && this.page.number < pageNumber))
       return;
-    this.numbers = [];
     this.service.getSales(pageNumber).subscribe((data: Page) => {
-      console.log('data ', data.content);
-
       this.page = data;
-      for (var i = 0; i < this.page.totalPages; i++) {
-        this.numbers.push(i);
-      }
+      if (pageNumber === 0)
+        this.numbers = Array.from(Array(this.page.totalPages).keys());
     });
   }
   getProductSale(sale: Sale) {

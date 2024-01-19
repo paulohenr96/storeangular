@@ -29,10 +29,22 @@ Front end web application that consumes an api to manage the inventory.
 | Users      |<div style="text-align: justify;"> Page that shows all the users     |
 | UserForm      |<div style="text-align: justify;"> Page used to save new users     |
 
-## COMPONENTS
 
 ## SERVICES
+| SERVICE  | Description |
+| ------------- |:-------------:|
+| Login      |<div style="text-align: justify;">  Send the login request   |
+| Product      |<div style="text-align: justify;"> Communicate with the endpoint "products" to do CRUD operations   |
+| Sale      |<div style="text-align: justify;"> Communicate with the endpoint "sales" to do CRUD operations    |
+| User    |<div style="text-align: justify;">Communicate with the endpoint "users" to do CRUD operations     |
 
 ## GUARD
+| Guard  | Description |
+| ------------- |:-------------:|
+| AuthGuard      |<div style="text-align: justify;">  check if the session has the 'token' item. Redirect the user to the login page if the token isnt in the sessionStorage  |
+
 
 ## INTERCEPTOR
+| Interceptor  | Description |
+| ------------- |:-------------:|
+| HttpInterceptor     |<div style="text-align: justify;">  Get the token in the sessionStorage and put it in the header Authorization before sending every request to the api  |

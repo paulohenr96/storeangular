@@ -41,7 +41,8 @@ Front end web application that consumes an api to manage the inventory.
 ## GUARD
 | Guard  | Description |
 | ------------- |:-------------:|
-| AuthGuard      |<div style="text-align: justify;">  check if the session has the 'token' item. Redirect the user to the login page if the token isnt in the sessionStorage  |
+| AuthGuard      |<div style="text-align: justify;">  check if the session has the 'token' item. Redirect the user to the login page if the token isnt in the sessionStorage. Every page except the **LOGIN** page is protected by this guard. |
+| AdminGuard      |<div style="text-align: justify;">  Check if the logged user is **admin**. The pages **USERS**,**USER FORMS** and **METRICS** are protected by this guard   |
 
 
 ## INTERCEPTOR

@@ -34,9 +34,9 @@ Front end web application that consumes an api to manage the inventory.
 | SERVICE  | Description |
 | ------------- |:-------------:|
 | Login      |<div style="text-align: justify;">  Send the login request   |
-| Product      |<div style="text-align: justify;"> Communicate with the endpoint "products" to do CRUD operations   |
-| Sale      |<div style="text-align: justify;"> Communicate with the endpoint "sales" to do CRUD operations    |
-| User    |<div style="text-align: justify;">Communicate with the endpoint "users" to do CRUD operations     |
+| Product      |<div style="text-align: justify;"> Communicate with the endpoint **"/products"** to do CRUD operations   |
+| Sale      |<div style="text-align: justify;"> Communicate with the endpoint **"/sales"** to do CRUD operations    |
+| User    |<div style="text-align: justify;">Communicate with the endpoint **"/users"** to do CRUD operations     |
 
 ## GUARD
 | Guard  | Description |

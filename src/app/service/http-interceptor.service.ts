@@ -17,7 +17,6 @@ export class HttpInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     var token = sessionStorage.getItem('token') + '';
     if (token == 'null' || token.trim() == '') {
-      console.log('Sem Token No Interceptor');
       return next.handle(req);
     }
     var authRequest = req.clone({

@@ -46,8 +46,9 @@ export class UsersService {
   }
 
   save(user: User): Observable<string> {
-    return this.http.post<string>(Constants.url + '/users', user).pipe(
+    return this.http.post<any>(Constants.url + '/users', user).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log(error);
         return error.status === 409 ? of('Invalid username') : of('Error');
       })
     );

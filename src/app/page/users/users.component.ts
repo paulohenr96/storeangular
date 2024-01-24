@@ -17,8 +17,6 @@ export class UsersComponent implements OnInit {
   idUserDelete: any;
   constructor(private service: UsersService, private router: Router) {}
   ngOnInit(): void {
-    if (sessionStorage.getItem('admin') === 'false')
-      this.router.navigate(['/home']);
     this.getAll();
   }
   delete() {

@@ -10,17 +10,22 @@ import { authGuard } from './auth.guard'; // Importe o AuthGuard
 import { UsersComponent } from './page/users/users.component';
 import { UserformComponent } from './page/userform/userform.component';
 import { MetricsComponent } from './page/metrics/metrics.component';
+import { adminGuard } from './admin.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
-  { path: 'users', component: UsersComponent, canActivate: [authGuard] },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [authGuard, adminGuard],
+  },
   {
     path: 'users/form',
     component: UserformComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   {
     path: 'users/form/:id',
@@ -30,7 +35,7 @@ const routes: Routes = [
   {
     path: 'metrics',
     component: MetricsComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
   },
   { path: 'sales', component: SalesComponent, canActivate: [authGuard] },
   {

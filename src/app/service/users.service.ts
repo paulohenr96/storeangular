@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { Constants } from '../constants';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { Metrics } from '../model/metrics';
 
 @Injectable({
@@ -40,7 +40,7 @@ export class UsersService {
     return this.http.put<any>(Constants.url + '/users', user).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
@@ -62,14 +62,7 @@ export class UsersService {
     );
   }
   confirmPassword(pass: String): Observable<any> {
-    return this.http
-      .post<any>(Constants.url + '/users/confirmpassword', pass)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError('Error during httprequest');
-        })
-      );
+    return this.http.post<any>(Constants.url + '/users/confirmpassword', pass);
   }
   getMetrics(): Observable<Metrics> {
     return this.http.get<Metrics>(Constants.url + '/users/metrics').pipe(

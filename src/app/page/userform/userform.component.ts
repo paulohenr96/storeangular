@@ -3,6 +3,7 @@ import {
   TranslationWidth,
   getLocaleMonthNames,
 } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SalesChart } from 'src/app/model/saleschart';
@@ -21,15 +22,20 @@ export class UserformComponent implements OnInit {
   newPassword: string = '';
   checkPassword() {
     this.erros = [];
-    this.service.confirmPassword(this.passwordConfirm).subscribe((s) => {
-      console.log(s);
-      if (s.response === 'true') {
+    this.service.confirmPassword(this.passwordConfirm).subscribe(
+      (response: any) => {
+        console.log(response);
         this.passwordConfirm = '';
         this.edit();
-        return;
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.erros.push('Wrong password. Please insert your admin password.');
+          return;
+        }
+        this.erros.push('Error, contact the support.');
       }
-      this.erros.push('Wrong password !!');
-    });
+    );
   }
   erros: string[] = [];
   percentual: number = 0;
@@ -41,16 +47,24 @@ export class UserformComponent implements OnInit {
   year: number = 2024;
 
   edit() {
-    this.service.edit(this.user).subscribe((s) => {
-      console.log(s);
-      if (!s) {
-        this.msgSucesso = 'User edited.';
-        return;
-      }
-      this.erros.push(s.response);
+    this.service.edit(this.user).subscribe(
+      (s) => {
+        console.log(s);
+        if (!s) {
+          this.msgSucesso = 'User edited.';
+          return;
+        }
 
-      this.getMonthlyIncome();
-    });
+        this.getMonthlyIncome();
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 409) {
+          this.erros.push('Invalid username');
+          return;
+        }
+        this.erros.push('Error, contact support');
+      }
+    );
   }
   reset() {
     this.user = new User();

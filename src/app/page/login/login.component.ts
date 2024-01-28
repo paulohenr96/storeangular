@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
           this.erros.push('Invalid Login');
           return;
         }
+        console.log(data.fullToken);
         sessionStorage.setItem('goal', data.goal);
         sessionStorage.setItem('token', data.fullToken);
         sessionStorage.setItem('username', this.user.username);
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
-        alert('Error');
+        this.erros.push('Internal Error : ' + error.status);
       }
     );
   }

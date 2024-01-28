@@ -23,7 +23,7 @@ export class UsersService {
     return this.http.get<User[]>(Constants.url + '/users').pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
@@ -68,7 +68,7 @@ export class UsersService {
     return this.http.get<Metrics>(Constants.url + '/users/metrics').pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }

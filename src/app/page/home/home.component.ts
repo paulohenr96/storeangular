@@ -3,6 +3,7 @@ import {
   TranslationWidth,
   getLocaleMonthNames,
 } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Metrics } from 'src/app/model/metrics';
 import { Product } from 'src/app/model/product';
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit {
   months: string[] = [];
   year: number = 2024;
   isAdmin: boolean = false;
+  erros: string[] = [];
   constructor(
     private service: SalesService,
     private userService: UsersService,
@@ -52,22 +54,40 @@ export class HomeComponent implements OnInit {
     this.month = this.months[new Date().getMonth()];
   }
   getInfo() {
-    this.productService.getInfo().subscribe((data: any) => {
-      if (data != null) {
-        this.count = data.totalProduct;
-        this.totalQuantity = data.sumQuantity;
-        this.total = data.income ? data.income : 0;
+    this.productService.getInfo().subscribe(
+      (data: any) => {
+        if (data != null) {
+          this.count = data.totalProduct;
+          this.totalQuantity = data.sumQuantity;
+          this.total = data.income ? data.income : 0;
 
-        this.setGoal();
+          this.setGoal();
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+
+        this.erros.push(
+          'Internal Error (' + error.status + ') : ' + error.error
+        );
       }
-    });
+    );
   }
   setGoal() {
     if (this.isAdmin) {
-      this.userService.getMetrics().subscribe((data: Metrics) => {
-        const goal = data.monthlyGoal;
-        this.calculatePercentual(goal);
-      });
+      this.userService.getMetrics().subscribe(
+        (data: Metrics) => {
+          const goal = data.monthlyGoal;
+          this.calculatePercentual(goal);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+
+          this.erros.push(
+            'Internal Error (' + error.status + ') : ' + error.error
+          );
+        }
+      );
       return;
     }
     const goal = parseInt(sessionStorage.getItem('goal')!);
@@ -78,15 +98,24 @@ export class HomeComponent implements OnInit {
   }
 
   getChart(year: number) {
-    this.service.getChart(year).subscribe((data: dataType) => {
-      this.chartData = this.months.map((e, index) => {
-        const indexOfMonth = data.xAxis.indexOf(index + 1);
-        return {
-          name: e,
-          value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,
-        };
-      });
-    });
+    this.service.getChart(year).subscribe(
+      (data: dataType) => {
+        this.chartData = this.months.map((e, index) => {
+          const indexOfMonth = data.xAxis.indexOf(index + 1);
+          return {
+            name: e,
+            value: indexOfMonth !== -1 ? data.yAxis[indexOfMonth] : 0,
+          };
+        });
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+
+        this.erros.push(
+          'Internal Error (' + error.status + ') : ' + error.error
+        );
+      }
+    );
   }
 
   search() {
@@ -94,8 +123,16 @@ export class HomeComponent implements OnInit {
   }
 
   checkQuantity() {
-    this.productService.checkQuantity().subscribe((data: Product[]) => {
-      this.productsRepo = data;
-    });
+    this.productService.checkQuantity().subscribe(
+      (data: Product[]) => {
+        this.productsRepo = data;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        this.erros.push(
+          'Internal Error (' + error.status + ') : ' + error.error
+        );
+      }
+    );
   }
 }

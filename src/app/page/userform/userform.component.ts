@@ -33,7 +33,7 @@ export class UserformComponent implements OnInit {
           this.erros.push('Wrong password. Please insert your admin password.');
           return;
         }
-        this.erros.push('Error, contact the support.');
+        this.erros.push('Error, contact the support. Code:' + error.status);
       }
     );
   }

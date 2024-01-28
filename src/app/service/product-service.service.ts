@@ -18,7 +18,7 @@ export class ProductServiceService {
       catchError((error: HttpErrorResponse) => {
         console.error('Error on saveproduct() => ', error.message);
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
@@ -27,7 +27,7 @@ export class ProductServiceService {
       catchError((error: HttpErrorResponse) => {
         console.error('Error on count() => ', error.message);
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
@@ -37,7 +37,7 @@ export class ProductServiceService {
       catchError((error: HttpErrorResponse) => {
         console.error('Error on delete() => ', error.message);
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
@@ -49,7 +49,7 @@ export class ProductServiceService {
         catchError((error: HttpErrorResponse) => {
           console.error('Error on getProducts() => ', error.message);
           console.error(error);
-          return throwError('Error during httprequest');
+          return throwError(error);
         })
       );
   }
@@ -67,7 +67,7 @@ export class ProductServiceService {
         catchError((error: HttpErrorResponse) => {
           console.error('Error on getProducts() => ', error.message);
           console.error(error);
-          return throwError('Error during httprequest');
+          return throwError(error);
         })
       );
   }
@@ -78,7 +78,7 @@ export class ProductServiceService {
         catchError((error: HttpErrorResponse) => {
           console.error('Error on getProducts() => ', error.error);
           console.error(error);
-          return throwError('Error during httprequest');
+          return throwError(error);
         })
       );
   }
@@ -88,18 +88,15 @@ export class ProductServiceService {
       catchError((error: HttpErrorResponse) => {
         console.error('Error on getProduct() => ', error.message);
         console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }
 
   editProduct(p: Product) {
-    alert('Editando ' + p.id);
     return this.http.put(Constants.url_products + '/' + p.id, p).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Error on editProduct() => ', error.message);
-        console.error(error);
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/model/product';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-product',
@@ -39,19 +40,31 @@ export class NewProductComponent implements OnInit {
 
   saveProduct() {
     if (this.validate()) {
-      this.service.saveproduct(this.newProduct).subscribe((data: any) => {
-        this.msgSucesso = 'The product was added to the inventory';
-        this.newProduct = new Product();
-      });
+      this.service.saveproduct(this.newProduct).subscribe(
+        (data: any) => {
+          this.msgSucesso = 'The product was added to the inventory';
+          this.newProduct = new Product();
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          this.msg.push(`Internal error (${error.status})=> ${error.error}`);
+        }
+      );
     }
     // alert(this.newProduct.category);
   }
 
   getProduct(id: number) {
-    this.service.getProduct(id).subscribe((data: Product) => {
-      this.newProduct = data;
-      console.log(this.newProduct);
-    });
+    this.service.getProduct(id).subscribe(
+      (data: Product) => {
+        this.newProduct = data;
+        console.log(this.newProduct);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        this.msg.push(`Internal error (${error.status})=> ${error.error}`);
+      }
+    );
   }
 
   validate(): boolean {
@@ -73,11 +86,17 @@ export class NewProductComponent implements OnInit {
 
   editProduct() {
     if (this.validate()) {
-      this.service.editProduct(this.newProduct).subscribe(() => {
-        this.idProduct = -1;
-        this.newProduct = new Product();
-        this.msgSucesso = 'The product was successful edited.';
-      });
+      this.service.editProduct(this.newProduct).subscribe(
+        () => {
+          this.idProduct = -1;
+          this.newProduct = new Product();
+          this.msgSucesso = 'The product was successful edited.';
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          this.msg.push(`Internal error (${error.status})=> ${error.error}`);
+        }
+      );
     }
   }
 }

@@ -45,10 +45,7 @@ export class SalesService {
   saveSales(sale: Sale): any {
     return this.http.post(Constants.url_sales, sale).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Error on savesale() => ', error.message);
-        console.error(error);
-        alert('Error saving sale...');
-        return throwError('Error during httprequest');
+        return throwError(error);
       })
     );
   }

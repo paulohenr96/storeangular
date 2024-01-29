@@ -3,6 +3,7 @@ import { Page } from 'src/app/model/pageproduct';
 import { Product } from 'src/app/model/product';
 import { ProductServiceService } from 'src/app/service/product-service.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -24,7 +25,7 @@ export class ProductComponent implements OnInit {
   products: any;
   numbers: number[] = [];
   isAdmin: boolean = false;
-
+  errors: string[] = [];
   idDeleteProduct: number = 0;
   constructor(private router: Router, private service: ProductServiceService) {}
   ngOnInit(): void {
@@ -45,9 +46,18 @@ export class ProductComponent implements OnInit {
     });
   }
   deleteProduct() {
-    this.service
-      .deleteProduct(this.idDeleteProduct)
-      .subscribe(() => this.getProducts(0));
+    this.service.deleteProduct(this.idDeleteProduct).subscribe(
+      () => {
+        this.getProducts(0);
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          this.errors.push('Not Found');
+          return;
+        }
+        this.errors.push('Internal Error : ' + error.message);
+      }
+    );
   }
 
   editProduct(product: Number) {
@@ -55,12 +65,15 @@ export class ProductComponent implements OnInit {
   }
 
   getProductsByCategory(page: number) {
-    this.service
-      .getProductsByCategory(page, this.category)
-      .subscribe((data: any) => {
+    this.service.getProductsByCategory(page, this.category).subscribe(
+      (data: any) => {
         this.products = data;
         if (page === 0)
           this.numbers = Array.from(Array(this.products.totalPages).keys());
-      });
+      },
+      (error: HttpErrorResponse) => {
+        this.errors.push('Internal Error : ' + error.message);
+      }
+    );
   }
 }

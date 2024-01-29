@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
         console.log(error);
 
         this.erros.push(
-          'Internal Error (' + error.status + ') : ' + error.error
+          'Internal Error (' + error.status + ') : ' + error.message
         );
       }
     );
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
           console.log(error);
 
           this.erros.push(
-            'Internal Error (' + error.status + ') : ' + error.error
+            'Internal Error (' + error.status + ') : ' + error.message
           );
         }
       );
@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
         console.log(error);
 
         this.erros.push(
-          'Internal Error (' + error.status + ') : ' + error.error
+          'Internal Error (' + error.status + ') : ' + error.message
         );
       }
     );
@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
       (error: HttpErrorResponse) => {
         console.log(error);
         this.erros.push(
-          'Internal Error (' + error.status + ') : ' + error.error
+          'Internal Error (' + error.status + ') : ' + error.message
         );
       }
     );

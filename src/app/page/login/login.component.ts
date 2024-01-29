@@ -24,10 +24,6 @@ export class LoginComponent implements OnInit {
     if (!this.checkFields()) return;
     this.service.login(this.user).subscribe(
       (data: any) => {
-        if (data.fullToken === '') {
-          this.erros.push('Invalid Login');
-          return;
-        }
         console.log(data.fullToken);
         sessionStorage.setItem('goal', data.goal);
         sessionStorage.setItem('token', data.fullToken);
@@ -40,6 +36,10 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
+        if (error.status === 401) {
+          this.erros.push('Invalid Login');
+          return;
+        }
         this.erros.push('Internal Error : ' + error.status);
       }
     );

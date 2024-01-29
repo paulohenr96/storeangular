@@ -13,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-salesform',
@@ -53,10 +54,16 @@ export class SalesformComponent implements OnInit {
     this.setDate();
 
     this.msg = [];
-    this.service.saveSales(this.newSale).subscribe(() => {
-      this.successmsg = 'Sale completed .Congratulations !!';
-      this.getProducts(0);
-    });
+    this.service.saveSales(this.newSale).subscribe(
+      () => {
+        this.successmsg = 'Sale completed .Congratulations !!';
+        this.getProducts(0);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        this.msg.push(error.message);
+      }
+    );
     this.resetSale();
   }
   selectProduct(p: Product) {

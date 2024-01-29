@@ -69,6 +69,7 @@ export class SalesformComponent implements OnInit {
   selectProduct(p: Product) {
     this.productSale.productId = p.id;
     this.productSale.productName = p.name;
+    this.productSale.name = p.name;
     this.selectedProduct = p;
   }
 
@@ -86,11 +87,6 @@ export class SalesformComponent implements OnInit {
     return this.msg.length == 0;
   }
   setDate() {
-    // var arr = this.texto.split(' ');
-    // var arrtime = arr[0].split(':');
-    // var hour = Number.parseInt(arrtime[0]);
-    // var min = Number.parseInt(arrtime[1]);
-    // this.dateSelected!.setHours(hour, min, 0);
     const options = { timeZone: 'America/Sao_Paulo' };
 
     this.newSale.date = new Date(new Date().toLocaleString('en-US', options));

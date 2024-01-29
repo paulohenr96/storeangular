@@ -80,7 +80,7 @@ export class UsersService {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error(error);
-          return throwError('Error during httprequest');
+          return throwError(error);
         })
       );
   }
